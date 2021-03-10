@@ -9,7 +9,7 @@ import java.util.Map;
  * @version 1.0.0
  * <h>LeetCode 测试类  1~20题 (免费部分)</h>
  * <p>
- *     leetcode官方网址：https://leetcode-cn.com
+ * leetcode官方网址：https://leetcode-cn.com
  * </p>
  * @Date 2021/3/9
  **/
@@ -73,17 +73,23 @@ public class LeetCodeTest {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         //创建预设指针
         ListNode pre = new ListNode(0);
+        //设置当前节点，用于计算
         ListNode cur = pre;
         int carry = 0;
+        //进行循环遍历
         while (l1 != null || l2 != null) {
             int x = l1 == null ? 0 : l1.val;
             int y = l2 == null ? 0 : l2.val;
             int sum = x + y + carry;
 
+            //这里有个小技巧，逻辑计算的效率更好
+            //两个各位数相加必定小于20，这里目的是为了获取下一个节点的进位1,
             carry = sum / 10;
+//            carry = sum > 10 ? 1 : 0;
             sum = sum % 10;
             cur.next = new ListNode(sum);
 
+            //将当前节点替换成下一节点
             cur = cur.next;
             if (l1 != null)
                 l1 = l1.next;
