@@ -3,6 +3,8 @@ package com.leetcode.entity;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Objects;
+
 /**
  * @author wangbaitao
  * @version 1.0.0
