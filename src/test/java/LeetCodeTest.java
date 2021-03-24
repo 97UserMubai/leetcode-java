@@ -74,7 +74,7 @@ public class LeetCodeTest {
     /**
      * 遍历输出链表数据
      */
-    private void printNodeValue(ListNode listNode) {
+    public void printNodeValue(ListNode listNode) {
         StringBuilder stringBuilder = new StringBuilder();
         while (listNode != null) {
             stringBuilder.append(listNode.val);
@@ -151,5 +151,97 @@ public class LeetCodeTest {
             cur.next = new ListNode(carry);
         }
         return pre.next;
+    }
+
+    @Test
+    public void testLengthOfLongestSubstring() {
+        System.out.println(lengthOfLongestSubstring("abcabcbb", "暴力解法"));
+        System.out.println(lengthOfLongestSubstring("bbbbbb", "暴力解法"));
+        System.out.println(lengthOfLongestSubstring("pwwkew", "暴力解法"));
+        System.out.println(lengthOfLongestSubstring("", "暴力解法"));
+        System.out.println(lengthOfLongestSubstring(null, "暴力解法"));
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(lengthOfLongestSubstring("bbbbbb"));
+        System.out.println(lengthOfLongestSubstring("pwwkew"));
+        System.out.println(lengthOfLongestSubstring(""));
+        System.out.println("debug");
+    }
+
+    /**
+     * 3.无重复字符的最长子串-暴力解法，复杂度最大为O(n²)
+     * <pre>
+     *     题目地址：https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
+     *     给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度
+     *     案例1：s = "abcabcbb"  输出 3
+     *     案例2：s = "bbbbbb" 输出1
+     *     案例3：s = "pwwkew" 输出3 ，因为无重复字符的最长子串是 "wke"，所以其长度为3。
+     *     请注意，答案必须是子串的长度，"pwke" 是一个子序列，不是子串。
+     *     案例4：s="" 输出0
+     * </pre>
+     */
+    public int lengthOfLongestSubstring(String s, String type) {
+        System.out.print(type + ":");
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        //解析思路，将结果进行拆解，在s.length递减和当前长度进行双重循环，得到的结果生成集
+        // 如果出现重复char，则直接将当前长度赋值给result
+        int result = 0;
+        int length = s.length();
+        char[] sChars = s.toCharArray();
+        ////从index = 0的位置开始，进行字符串拼接
+        for (int i = 0; i < length; i++) {
+            //得到第二层的遍历长度
+            StringBuilder builder = new StringBuilder();
+            int tempValue = 0;
+            for (int j = i; j < length; j++) {
+                if (builder.toString().contains(String.valueOf(sChars[j]))) {
+                    //存在该字符串，直接返回结果
+                    break;
+                } else {
+                    builder.append(sChars[j]);
+                    tempValue++;
+                }
+            }
+            if (tempValue > result) {
+                result = tempValue;
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * 3.无重复字符的最长子串-滑动窗口
+     * <pre>
+     *     题目地址：https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
+     *     给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度
+     *     案例1：s = "abcabcbb"  输出 3
+     *     案例2：s = "bbbbbb" 输出1
+     *     案例3：s = "pwwkew" 输出3 ，因为无重复字符的最长子串是 "wke"，所以其长度为3。
+     *     请注意，答案必须是子串的长度，"pwke" 是一个子序列，不是子串。
+     *     案例4：s="" 输出0
+     * </pre>
+     * <pre>
+     *     定义一个 map 数据结构存储 (k, v)，其中 key 值为字符，value 值为字符位置 +1，加 1 表示从字符位置后一个才开始不重复
+     *     我们定义不重复子串的开始位置为 start，结束位置为 end
+     *     随着 end 不断遍历向后，会遇到与 [start, end] 区间内字符相同的情况，此时将字符作为 key 值，获取其 value 值，
+     *     并更新 start，此时 [start, end] 区间内不存在重复字符
+     *    无论是否更新 start，都会更新其 map 数据结构和结果 ans。
+     *    时间复杂度：O(n)
+     * </pre>
+     */
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length(), ans = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int end = 0, start = 0; end < n; end++) {
+            char alpha = s.charAt(end);
+            if (map.containsKey(alpha)) {
+                start = Math.max(map.get(alpha), start);
+            }
+            ans = Math.max(ans, end - start + 1);
+            map.put(s.charAt(end), end + 1);
+        }
+        return ans;
     }
 }
