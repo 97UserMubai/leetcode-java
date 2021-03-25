@@ -230,15 +230,29 @@ public class LeetCodeTest {
      *    无论是否更新 start，都会更新其 map 数据结构和结果 ans。
      *    时间复杂度：O(n)
      * </pre>
+     * <pre>
+     *     个人总结：
+     *     在暴力解法得到的结果里面，双重循环的情况下，复杂度为O(n²)，当字符串很长的时候，会放大这个消耗
+     *     再看会需求，我们需要找出字符串中最长的不重复子串，那么最低的复杂度也在O(n)
+     *     从起始位到遍历的位置，需要两个参数start和end做减法得到ans，那么怎么在一次遍历中完成这个需求就是我们需要解决的问题
+     *     首先ans = end - start + 1;
+     *     其次：当出现重复的字符串的时候，我们需要将start挪到重复字符串的index
+     *     固我们需要保存每个字符的max(index)+1
+     *     这样每次出现重复的情况下，我们的start就会自动从重复字符的位置开始重新计数
+     *     PS:这里不需要考虑start->end跳跃后中间的字符不进行匹配的问题，因为ans每次都得到最大的长度，
+     *     之后的匹配如果出现这些字符，也会和ans比较
+     * </pre>
      */
     public int lengthOfLongestSubstring(String s) {
         int n = s.length(), ans = 0;
         Map<Character, Integer> map = new HashMap<>();
         for (int end = 0, start = 0; end < n; end++) {
             char alpha = s.charAt(end);
+            //判断已经包含这个字符，如果包含，则将当前字符对应的value赋值给start
             if (map.containsKey(alpha)) {
                 start = Math.max(map.get(alpha), start);
             }
+            //每次循环都判断一下end-start+1（当前窗口大小），并判断是否需要替换ans
             ans = Math.max(ans, end - start + 1);
             map.put(s.charAt(end), end + 1);
         }
