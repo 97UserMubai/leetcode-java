@@ -8,13 +8,16 @@ import java.util.Map;
 /**
  * @author wangbaitao
  * @version 1.0.0
- * <h>LeetCode 测试类  1~20题 (免费部分)</h>
+ * <h>LeetCode 测试类  1~5题 (免费部分)</h>
  * <p>
  * leetcode官方网址：https://leetcode-cn.com
  * </p>
  * @Date 2021/3/9
  **/
 public class LeetCodeTest {
+    /**
+     * twoSum 测试案例入口
+     */
     @Test
     public void testTwoNum() {
         int[] nums = {1, 2, 3, 4, 5};
@@ -23,6 +26,7 @@ public class LeetCodeTest {
     }
 
     /**
+     * 1.twoSum
      * 给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 的那两个整数，并返回它们的数组下标。
      * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
      * 你可以按任意顺序返回答案。
@@ -89,6 +93,7 @@ public class LeetCodeTest {
 
 
     /**
+     * 2.addTwoNumbers
      * 给你两个非空 的链表，表示两个非负的整数。它们每位数字都是按照逆序的方式存储的，并且每个节点只能存储一位数字。
      * 请你将两个数相加，并以相同形式返回一个表示和的链表。
      * 你可以假设除了数字 0 之外，这两个数都不会以 0开头。
@@ -168,7 +173,7 @@ public class LeetCodeTest {
     }
 
     /**
-     * 3.无重复字符的最长子串-暴力解法，复杂度最大为O(n²)
+     * 3.lengthOfLongestSubstring,无重复字符的最长子串-暴力解法，复杂度最大为O(n²)
      * <pre>
      *     题目地址：https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
      *     给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度
@@ -212,7 +217,7 @@ public class LeetCodeTest {
 
 
     /**
-     * 3.无重复字符的最长子串-滑动窗口
+     * 3.lengthOfLongestSubstring,无重复字符的最长子串-滑动窗口
      * <pre>
      *     题目地址：https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/
      *     给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度
@@ -241,6 +246,9 @@ public class LeetCodeTest {
      *     这样每次出现重复的情况下，我们的start就会自动从重复字符的位置开始重新计数
      *     PS:这里不需要考虑start->end跳跃后中间的字符不进行匹配的问题，因为ans每次都得到最大的长度，
      *     之后的匹配如果出现这些字符，也会和ans比较
+     *     PS2:需要注意的是，在比较contain和赋值GetIndex的过程中，我们需要一个中间变量来保存这些数据
+     *     选用map的原因是，他的containKey的算法复杂度为O(1)
+     *     所以很多时候，在数据算法中需要灵活应用Java数据类型中已经提供给我们的合适类型来辅助我们解决问题
      * </pre>
      */
     public int lengthOfLongestSubstring(String s) {
@@ -257,5 +265,59 @@ public class LeetCodeTest {
             map.put(s.charAt(end), end + 1);
         }
         return ans;
+    }
+
+    /**
+     * 4.findMedianSortedArrays , 寻找两个正序数组的中位数
+     * 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的 中位数 。
+     * <pre>
+     *     案例1：
+     *     输入：nums1 = [1,3], nums2 = [2]
+     *     输出：2.00000
+     *     解释：合并数组 = [1,2,3] ，中位数 2
+     *     案例2：
+     *     输入：nums1 = [1,2], nums2 = [3,4]
+     *     输出：2.50000
+     *     解释：合并数组 = [1,2,3,4] ，中位数 (2 + 3) / 2 = 2.5
+     *     案例3：
+     *     输入：nums1 = [2], nums2 = []
+     *     输出：2.00000
+     * </pre>
+     */
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        //获取完整的数组
+        //todo 这道题太难了，暂且搁置，争取用最后的log(m+n)复杂度的算法来进行优雅代码的分析
+        return 0.00;
+    }
+
+    /**
+     * 5.longestPalindrome  最长回文字符串， 给你一个字符串 s，找到 s 中最长的回文子串。
+     * <pre>
+     *     示例1：
+     *     输入：s = "babad"
+     *     输出："bab"
+     *     解释："aba" 同样是符合题意的答案。
+     *     示例2：
+     *     输入：s = "cbbd"
+     *     输出："bb"
+     *     示例3：
+     *     输入：s = "a"
+     *     输出："a"
+     *     示例4：
+     *     输入：s = "ac"
+     *     输出："a"
+     * </pre>
+     * <pre>
+     *     什么是回文字符串，就是正着读和反着读是一样的，所以对于一个
+     * </pre>
+     */
+    public String longestPalindrome(String s, String type) {
+        System.out.print(type + ":");
+        //暴力解法
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+        return null;
     }
 }
